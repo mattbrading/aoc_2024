@@ -6,21 +6,20 @@
 //
 
 import Testing
-@testable import aoc_2024
 
+@testable import aoc_2024
 
 @Suite("Day 1 Tests")
 struct Day1Tests {
-    @Test func part1() async throws {
-        let result = Day0().part1(input: "Hello, World!")
-        
-        #expect(result == 13)
-    }
-    
-    
-    @Test func part2() async throws {
-        let result = Day0().part2(input: "Hello, World!")
-        
-        #expect(result == 2)
-    }
+  @Test func part1() async throws {
+    let result = Day0().part1(input: "Hello, World!")
+
+    #expect(result == 13)
+  }
+
+  @Test func part2() async throws {
+    let result = Day0().part2(input: "Hello, World!")
+
+    #expect(result == 2)
+  }
 }
