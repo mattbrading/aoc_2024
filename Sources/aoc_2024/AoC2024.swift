@@ -7,8 +7,7 @@ struct AoC2024: ParsableCommand {
     commandName: "aoc_2024",
     abstract: "Run AoC 2024",
     subcommands: [
-      Day0.self,
-      Day1.self,
+      Day1.self
     ]
   )
 }

@@ -1,15 +1,23 @@
-import ArgumentParser
 //
-//  Day0.swift
+//  DayWrapper.swift
 //  aoc_2024
 //
-//  Created by Matt Brading on 29/11/2024.
+//  Created by Matt Brading on 01/12/2024.
 //
+
+import ArgumentParser
 import Foundation
 
-struct Day0: ParsableCommand {
+protocol AdventDay: ParsableCommand {
+  var inputFile: String { get set }
 
-  @Argument() var inputFile: String
+  func part1(input: String) -> Int
+
+  func part2(input: String) -> Int
+
+}
+
+extension AdventDay {
 
   mutating func run() throws {
     let inputFileURL = URL(fileURLWithPath: inputFile)
@@ -30,14 +38,6 @@ struct Day0: ParsableCommand {
 
     print("Part 1: \(part1result!), Time: \(part1time)")
     print("Part 2: \(part2result!), Time: \(part2time)")
-  }
-
-  func part1(input: String) -> Int {
-    input.count
-  }
-
-  func part2(input: String) -> Int {
-    input.count(where: { $0 == "o" })
   }
 
 }

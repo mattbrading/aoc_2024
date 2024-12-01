@@ -2,15 +2,15 @@
 //  day1_tests.swift
 //  aoc_2024
 //
-//  Created by Matt Brading on 29/11/2024.
+//  Created by Matt Brading on 01/12/2024.
 //
 
 import Testing
 
 @testable import aoc_2024
 
-@Suite("Day 2 Tests")
-struct Day2Tests {
+@Suite("Day 1 Tests")
+struct Day1Tests {
 
   let exampleInput = """
       3   4
