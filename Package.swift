@@ -5,8 +5,10 @@ import PackageDescription
 
 let package = Package(
   name: "aoc_2024",
+  platforms: [.macOS(.v13)],
   dependencies: [
-    .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
+    .package(
+      url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
   ],
   targets: [
     .executableTarget(

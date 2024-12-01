@@ -14,11 +14,22 @@ struct Day0: ParsableCommand {
   mutating func run() throws {
     let inputFileURL = URL(fileURLWithPath: inputFile)
     let input = try String(contentsOf: inputFileURL)
-    let part1 = part1(input: input)
-    let part2 = part2(input: input)
 
-    print("Part 1: \(part1)")
-    print("Part 2: \(part2)")
+    let clock = ContinuousClock()
+
+    var part1result: Int?
+    var part2result: Int?
+
+    let part1time = clock.measure {
+      part1result = part1(input: input)
+    }
+
+    let part2time = clock.measure {
+      part2result = part2(input: input)
+    }
+
+    print("Part 1: \(part1result!), Time: \(part1time)")
+    print("Part 2: \(part2result!), Time: \(part2time)")
   }
 
   func part1(input: String) -> Int {
