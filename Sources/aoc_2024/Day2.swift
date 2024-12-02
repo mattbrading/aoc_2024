@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Day2.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 02/12/2024.
