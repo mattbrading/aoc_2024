@@ -59,12 +59,7 @@ struct Day2: AdventDay {
   func isReportSafe(report: [Int]) -> Bool {
 
     let safeRange =
-      switch report[0] > report[1] {
-      case true:
-        -3..<0
-      case false:
-        1..<4
-      }
+      report[0] > report[1] ? -3..<0 : 1..<4
 
     for index in report.indices {
 
