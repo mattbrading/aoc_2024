@@ -7,7 +7,7 @@ import ArgumentParser
 //
 import Foundation
 
-struct PageUpdates {
+private struct PageUpdates {
   var rules: [Int: [Int]]
   var updates: [[Int]]
 

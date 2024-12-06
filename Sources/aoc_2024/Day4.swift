@@ -7,7 +7,7 @@
 
 import ArgumentParser
 
-struct Point {
+private struct Point {
   var row: Int
   var col: Int
 
@@ -16,7 +16,7 @@ struct Point {
   }
 }
 
-struct Grid {
+private struct Grid {
   var grid: [[Character]]
 
   func findCharacterPoints(character: Character) -> [Point] {
