@@ -60,55 +60,84 @@ private struct Map {
     }
   }
 
-  func travel(
-    start: Tile? = nil, direction: Direction = .north,
-    visited: [Tile: [Direction]] = [:]
-  )
-    -> [Tile]?
+  func travel()
+    -> Set<Tile>
   {
-    let start = start ?? guardLocation
+    var tile = guardLocation
+    var direction = Direction.north
     var visited = visited
 
-    visited[start] = visited[start] ?? []
+    while true {
+      visited.insert(tile)
 
-    if visited[start]!.contains(direction) {
-      return nil
+      let nextTile: Tile? = nextTile(start: tile, direction: direction)
+
+      guard let nextTile else {
+        return visited
+      }
+
+      if nextTile.obsticle {
+        direction = nextDirection(direction: direction)
+        continue
+      }
+      tile = nextTile
     }
 
-    visited[start]!.append(direction)
+  }
 
-    let nextTile: Tile? = nextTile(start: start, direction: direction)
+  func isLoop()
+    -> Bool
+  {
+    var tile = guardLocation
+    var visited: [Tile: Set<Direction>] = [:]
+    var direction = Direction.north
 
-    guard let nextTile else {
-      return Array(visited.keys)
+    while true {
+
+      visited[tile] = visited[tile] ?? []
+
+      if visited[tile]!.contains(direction) {
+        return true
+      }
+
+      visited[tile]!.insert(direction)
+
+      let nextTile: Tile? = nextTile(start: tile, direction: direction)
+
+      guard let nextTile else {
+        return false
+      }
+
+      if nextTile.obsticle {
+        direction = nextDirection(direction: direction)
+        continue
+      }
+
+      tile = nextTile
+
     }
-
-    if nextTile.obsticle {
-      let newDirection: Direction = nextDirection(direction: direction)
-      return travel(
-        start: start, direction: newDirection, visited: visited)
-    }
-    return travel(start: nextTile, direction: direction, visited: visited)
-
   }
 
   func findPossibleLoops()
     -> Int
   {
-    let tiles = travel()!
+    let tiles = travel()
 
-    return tiles.enumerated().count(where: { (idx, tile) in
+    return tiles.enumerated().count { idx, tile in
       if tile == guardLocation {
         return false
       }
-      print(idx)
+
+      if idx.isMultiple(of: 500) {
+        print(idx)
+      }
+
       var newMap = self
 
       newMap.rows[tile.row][tile.col].obsticle = true
 
-      return newMap.travel() == nil
-    })
-
+      return newMap.isLoop()
+    }
   }
 
   static func fromString(input: String) -> Map {
@@ -140,7 +169,7 @@ struct Day6: AdventDay {
 
     let map = Map.fromString(input: input)
 
-    return map.travel()!.count
+    return map.travel().count
   }
 
   func part2(input: String) -> Int {
