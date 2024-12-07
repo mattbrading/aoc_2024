@@ -51,4 +51,21 @@ struct Day7TestSingle {
 
     #expect(result == false)
   }
+
+  @Test func exampleInputPart2() async throws {
+    let result = Day7().part2(input: exampleInput)
+
+    #expect(result == 11387)
+  }
+
+  @Test(arguments: [
+    (156, [15, 6]),
+    (7290, [6, 8, 6, 15]),
+    (192, [17, 8, 14]),
+  ]) func validEquationsV2(result: Int, numbers: [Int]) {
+    let result = Day7().isCalibrationPossibleV2(
+      result: result, numbers: numbers)
+
+    #expect(result == true)
+  }
 }
