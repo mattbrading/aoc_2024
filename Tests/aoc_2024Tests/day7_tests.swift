@@ -9,7 +9,7 @@ import Testing
 
 @testable import aoc_2024
 
-struct Day7TestSingle {
+struct Day7Test {
   let exampleInput = """
     190: 10 19
     3267: 81 40 27
@@ -67,5 +67,10 @@ struct Day7TestSingle {
       result: result, numbers: numbers)
 
     #expect(result == true)
+  }
+  
+  @Test func concatNumbers() async throws {
+    let result = Day7().concat(a: 123, b: 456)
+    #expect(result == 123456)
   }
 }
