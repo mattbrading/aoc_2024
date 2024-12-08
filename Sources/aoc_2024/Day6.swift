@@ -20,8 +20,8 @@ private enum Direction {
 }
 
 private struct Map {
-  var rows: [[Tile]]
-  var guardLocation: Tile
+  let rows: [[Tile]]
+  let guardLocation: Tile
   var visited = Set<Tile>()
 
   func getTile(row: Int, col: Int) -> Tile? {
@@ -85,7 +85,7 @@ private struct Map {
 
   }
 
-  func isLoop()
+  func isLoop(newObsticle: Tile)
     -> Bool
   {
     var tile = guardLocation
@@ -100,7 +100,7 @@ private struct Map {
         return false
       }
 
-      if nextTile.obsticle == false {
+      if nextTile.obsticle == false && nextTile != newObsticle {
         tile = nextTile
         continue
       }
@@ -122,16 +122,12 @@ private struct Map {
   {
     let tiles = travel()
 
-    return tiles.enumerated().count { idx, tile in
+    return tiles.count { tile in
       if tile == guardLocation {
         return false
       }
 
-      var newMap = self
-
-      newMap.rows[tile.row][tile.col].obsticle = true
-
-      return newMap.isLoop()
+      return isLoop(newObsticle: tile)
     }
   }
 
