@@ -94,6 +94,19 @@ private struct Map {
 
     while true {
 
+      let nextTile: Tile? = nextTile(start: tile, direction: direction)
+
+      guard let nextTile else {
+        return false
+      }
+
+      if nextTile.obsticle == false {
+        tile = nextTile
+        continue
+      }
+
+      direction = nextDirection(direction: direction)
+
       visited[tile] = visited[tile] ?? []
 
       if visited[tile]!.contains(direction) {
@@ -101,20 +114,6 @@ private struct Map {
       }
 
       visited[tile]!.insert(direction)
-
-      let nextTile: Tile? = nextTile(start: tile, direction: direction)
-
-      guard let nextTile else {
-        return false
-      }
-
-      if nextTile.obsticle {
-        direction = nextDirection(direction: direction)
-        continue
-      }
-
-      tile = nextTile
-
     }
   }
 
@@ -126,10 +125,6 @@ private struct Map {
     return tiles.enumerated().count { idx, tile in
       if tile == guardLocation {
         return false
-      }
-
-      if idx.isMultiple(of: 500) {
-        print(idx)
       }
 
       var newMap = self
