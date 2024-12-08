@@ -25,11 +25,10 @@ private struct AntennaeMap {
 
     antennae.values.forEach({ group in
 
-      group.forEach({ a1 in
-        group.forEach({ a2 in
-
-          if a1 == a2 { return }
-
+      group.enumerated().forEach({ currentIndex, a1 in
+        let nextIndex = currentIndex + 1
+        if !group.indices.contains(nextIndex) { return }
+        group[nextIndex...].forEach({ a2 in
           let xDiff = a2.col - a1.col
           let yDiff = a2.row - a1.row
 
@@ -63,10 +62,10 @@ private struct AntennaeMap {
 
     antennae.values.forEach({ group in
 
-      group.forEach({ a1 in
-        group.forEach({ a2 in
-
-          if a1 == a2 { return }
+      group.enumerated().forEach({ currentIndex, a1 in
+        let nextIndex = currentIndex + 1
+        if !group.indices.contains(nextIndex) { return }
+        group[nextIndex...].forEach({ a2 in
 
           let xDiff = a2.col - a1.col
           let yDiff = a2.row - a1.row
