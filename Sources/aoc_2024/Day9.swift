@@ -36,17 +36,24 @@ private struct Disk {
 
   mutating func partitionV2() {
     files.reversed().forEach { fileIndex, fileId, fileSize in
-      guard
-        let emptySpaceIdx =
-          emptySpaces
-          .firstIndex(where: { spaceIdx, spaceSize in
-            spaceIdx < fileIndex && spaceSize >= fileSize
-          })
-      else {
+
+      var emptySpaceIdx: Int?
+      var emptySpace: (index: Int, size: Int)?
+
+      for (idx, space) in emptySpaces.enumerated() {
+        if space.index >= fileIndex { break }
+        if space.size >= fileSize {
+          emptySpace = space
+          emptySpaceIdx = idx
+          break
+        }
+      }
+
+      guard let (insertIdx, spaceSize) = emptySpace else {
         return
       }
 
-      let (insertIdx, spaceSize) = emptySpaces[emptySpaceIdx]
+      guard let emptySpaceIdx else { return }
 
       (0..<fileSize).forEach { idx in
         disk[insertIdx + idx] = disk[fileIndex + idx]
