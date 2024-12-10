@@ -22,11 +22,14 @@ private enum Direction {
 private struct Map {
   let rows: [[Tile]]
   let guardLocation: Tile
+  let width: Int
+  let height: Int
+
   var visited = Set<Tile>()
 
   func getTile(row: Int, col: Int) -> Tile? {
-    if rows.indices.contains(row) {
-      if rows[row].indices.contains(col) {
+    if row >= 0 && row < height {
+      if col >= 0 && col < width {
         return rows[row][col]
       }
     }
@@ -148,7 +151,11 @@ private struct Map {
         }
       }
 
-    return Map(rows: rows, guardLocation: guardLocation!)
+    let height: Int = rows.count
+    let width: Int = rows[0].count
+
+    return Map(
+      rows: rows, guardLocation: guardLocation!, width: width, height: height)
   }
 
 }
