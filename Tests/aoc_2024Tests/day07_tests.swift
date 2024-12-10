@@ -1,5 +1,5 @@
 //
-//  day7_tests.swift
+//  day07_tests.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 07/12/2024.
@@ -9,7 +9,8 @@ import Testing
 
 @testable import aoc_2024
 
-struct Day7Test {
+@Suite("Day 7 Tests")
+struct Day07Tests {
   let exampleInput = """
     190: 10 19
     3267: 81 40 27
@@ -23,7 +24,7 @@ struct Day7Test {
     """
 
   @Test func exampleInputPart1() async throws {
-    let result = Day7().part1(input: exampleInput)
+    let result = Day07().part1(input: exampleInput)
 
     #expect(result == 3749)
   }
@@ -34,7 +35,7 @@ struct Day7Test {
     (3267, [81, 40, 27]),
     (292, [11, 6, 16, 20]),
   ]) func validEquations(result: Int, numbers: [Int]) {
-    let result = Day7().isCalibrationPossible(result: result, numbers: numbers)
+    let result = Day07().isCalibrationPossible(result: result, numbers: numbers)
 
     #expect(result == true)
   }
@@ -47,13 +48,13 @@ struct Day7Test {
     (192, [17, 8, 14]),
     (21037, [9, 7, 18, 13]),
   ]) func invalidEquations(result: Int, numbers: [Int]) {
-    let result = Day7().isCalibrationPossible(result: result, numbers: numbers)
+    let result = Day07().isCalibrationPossible(result: result, numbers: numbers)
 
     #expect(result == false)
   }
 
   @Test func exampleInputPart2() async throws {
-    let result = Day7().part2(input: exampleInput)
+    let result = Day07().part2(input: exampleInput)
 
     #expect(result == 11387)
   }
@@ -63,14 +64,14 @@ struct Day7Test {
     (7290, [6, 8, 6, 15]),
     (192, [17, 8, 14]),
   ]) func validEquationsV2(result: Int, numbers: [Int]) {
-    let result = Day7().isCalibrationPossibleV2(
+    let result = Day07().isCalibrationPossibleV2(
       result: result, numbers: numbers)
 
     #expect(result == true)
   }
-  
+
   @Test func concatNumbers() async throws {
-    let result = Day7().concat(a: 123, b: 456)
+    let result = Day07().concat(a: 123, b: 456)
     #expect(result == 123456)
   }
 }

@@ -1,5 +1,5 @@
 //
-//  Day9.swift
+//  Day09.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 09/12/2024.
@@ -105,7 +105,9 @@ private struct Disk {
 
 }
 
-struct Day9: AdventDay {
+struct Day09: AdventDay {
+  static let configuration = CommandConfiguration(commandName: "day9")
+
   @Argument var inputFile: String
 
   func part1(input: String) -> Int {

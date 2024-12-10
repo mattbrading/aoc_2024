@@ -1,5 +1,5 @@
 //
-//  Day3.swift
+//  Day03.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 03/12/2024.
@@ -8,7 +8,9 @@
 import ArgumentParser
 import Foundation
 
-struct Day3: AdventDay {
+struct Day03: AdventDay {
+  static let configuration = CommandConfiguration(commandName: "day3")
+
   @Argument var inputFile: String
 
   func part1(input: String) -> Int {

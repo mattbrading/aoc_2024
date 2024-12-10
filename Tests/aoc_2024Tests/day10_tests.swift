@@ -9,6 +9,7 @@ import Testing
 
 @testable import aoc_2024
 
+@Suite("Day 10 Tests")
 struct Day10Tests {
 
   let exampleInput = """

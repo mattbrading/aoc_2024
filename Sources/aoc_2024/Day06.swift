@@ -1,5 +1,5 @@
 //
-//  Day6.swift
+//  Day06.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 06/12/2024.
@@ -153,7 +153,9 @@ private struct Map {
 
 }
 
-struct Day6: AdventDay {
+struct Day06: AdventDay {
+  static let configuration = CommandConfiguration(commandName: "day6")
+
   @Argument var inputFile: String
 
   func part1(input: String) -> Int {

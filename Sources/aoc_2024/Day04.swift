@@ -1,5 +1,5 @@
 //
-//  Day4.swift
+//  Day04.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 04/12/2024.
@@ -50,7 +50,8 @@ private struct Grid {
   }
 }
 
-struct Day4: AdventDay {
+struct Day04: AdventDay {
+  static let configuration = CommandConfiguration(commandName: "day4")
 
   @Argument var inputFile: String
 

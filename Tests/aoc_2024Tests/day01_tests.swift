@@ -1,5 +1,5 @@
 //
-//  day1_tests.swift
+//  day01_tests.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 01/12/2024.
@@ -10,7 +10,7 @@ import Testing
 @testable import aoc_2024
 
 @Suite("Day 1 Tests")
-struct Day1Tests {
+struct Day01Tests {
 
   let exampleInput = """
       3   4
@@ -22,7 +22,7 @@ struct Day1Tests {
     """
 
   @Test func part1() async throws {
-    let result = Day1().part1(input: exampleInput)
+    let result = Day01().part1(input: exampleInput)
 
     #expect(result == 11)
   }
@@ -34,13 +34,13 @@ struct Day1Tests {
         1   1
       """
 
-    let result = Day1().part1(input: input)
+    let result = Day01().part1(input: input)
 
     #expect(result == 2)
   }
 
   @Test func part2() async throws {
-    let result = Day1().part2(input: exampleInput)
+    let result = Day01().part2(input: exampleInput)
 
     #expect(result == 31)
   }

@@ -1,5 +1,5 @@
 //
-//  Test.swift
+//  day02_tests.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 02/12/2024.
@@ -10,7 +10,7 @@ import Testing
 @testable import aoc_2024
 
 @Suite("Day 2 Tests")
-struct Day2Tests {
+struct Day02Tests {
 
   let exampleInput = """
       7 6 4 2 1
@@ -26,7 +26,7 @@ struct Day2Tests {
     [1, 2, 4],
     [3, 2, 1],
   ]) func checkReportSafe(_ report: [Int]) throws {
-    let isSafe = Day2().isReportSafe(report: report)
+    let isSafe = Day02().isReportSafe(report: report)
 
     #expect(isSafe == true)
   }
@@ -37,13 +37,13 @@ struct Day2Tests {
     [6, 2, 1],
     [1, 2, 1],
   ]) func checkReportsNotSafe(_ report: [Int]) throws {
-    let isSafe = Day2().isReportSafe(report: report)
+    let isSafe = Day02().isReportSafe(report: report)
 
     #expect(isSafe == false)
   }
 
   @Test func checkExampleInputPart1() throws {
-    let result = Day2().part1(input: exampleInput)
+    let result = Day02().part1(input: exampleInput)
 
     #expect(result == 2)
   }
@@ -56,7 +56,7 @@ struct Day2Tests {
     [5, 4, 3, 2, 1, 6],
     [10, 11, 10, 9, 8],
   ]) func checkReportsSafeWithDampener(_ report: [Int]) throws {
-    let isSafe = Day2().isReportSafeWithProblemDampener(report: report)
+    let isSafe = Day02().isReportSafeWithProblemDampener(report: report)
 
     #expect(isSafe == true)
   }
@@ -65,13 +65,13 @@ struct Day2Tests {
     [1, 1, 1, 1],
     [1, 4, 0, 1],
   ]) func checkReportsNotSafeWithDampener(_ report: [Int]) throws {
-    let isSafe = Day2().isReportSafeWithProblemDampener(report: report)
+    let isSafe = Day02().isReportSafeWithProblemDampener(report: report)
 
     #expect(isSafe == false)
   }
 
   @Test func checkExampleInputPart2() throws {
-    let result = Day2().part2(input: exampleInput)
+    let result = Day02().part2(input: exampleInput)
 
     #expect(result == 4)
   }

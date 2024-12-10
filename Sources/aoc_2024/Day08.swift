@@ -1,5 +1,5 @@
 //
-//  Day8.swift
+//  Day08.swift
 //  aoc_2024
 //
 //  Created by Matt Brading on 08/12/2024.
@@ -124,7 +124,8 @@ private struct AntennaeMap {
 
 }
 
-struct Day8: AdventDay {
+struct Day08: AdventDay {
+  static let configuration = CommandConfiguration(commandName: "day8")
 
   @Argument var inputFile: String
 
