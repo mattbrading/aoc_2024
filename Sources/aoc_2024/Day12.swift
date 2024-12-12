@@ -7,7 +7,7 @@
 
 import ArgumentParser
 
-private struct Position: Hashable, CustomStringConvertible {
+private struct Position: Hashable {
   let row: Int
   let col: Int
 
@@ -19,22 +19,16 @@ private struct Position: Hashable, CustomStringConvertible {
       Position(row: row, col: col - 1),
     ]
   }
-
-  var description: String {
-    "(\(row), \(col))"
-  }
 }
 
-private struct Area: CustomStringConvertible {
+private struct Area {
   let char: Character
   let area: Int
   let perimeter: Int
+  let sides: Int
 
   var cost: Int { area * perimeter }
-
-  var description: String {
-    "\(char): \(area) * \(perimeter) = \(cost) "
-  }
+  var bulkCost: Int { area * sides }
 }
 
 private struct Garden: CustomStringConvertible {
@@ -72,20 +66,67 @@ private struct Garden: CustomStringConvertible {
 
     let area = cells.count
 
-    let perimeter = cells.reduce(
-      0,
-      { total, position in
+    var horizontalSides: [Int: [Int]] = [:]
+    var verticalSides: [Int: [Int]] = [:]
 
-        let nonBoundrySides = position.neighbours.count(where: {
-          getPlot(position: $0) == char
-        })
+    var perimeter = 0
 
-        return total
-          + (4
-            - nonBoundrySides)
-      })
+    cells.forEach { cell in
+      var nonBoundrySides = 4
 
-    return Area(char: char, area: area, perimeter: perimeter)
+      for neighbour in cell.neighbours {
+        if getPlot(position: neighbour) == char {
+          nonBoundrySides -= 1
+          continue
+        }
+
+        switch (neighbour.row, neighbour.col) {
+        case (cell.row, _):
+          let virtualCol =
+            neighbour.col > cell.col ? (cell.col * 4) + 1 : (cell.col * 4) - 1
+
+          if !verticalSides.keys.contains(virtualCol) {
+            verticalSides[virtualCol] = []
+          }
+          verticalSides[virtualCol]?.append(neighbour.row)
+
+        case (_, cell.col):
+          let virtualRow =
+            neighbour.row > cell.row ? (cell.row * 4) + 1 : (cell.row * 4) - 1
+          if !horizontalSides.keys.contains(virtualRow) {
+            horizontalSides[virtualRow] = []
+          }
+          horizontalSides[virtualRow]?.append(neighbour.col)
+
+        default:
+          continue
+        }
+      }
+
+      perimeter += nonBoundrySides
+    }
+
+    var sides = 0
+
+    for (_, vSides) in verticalSides {
+      let sorted = vSides.sorted()
+      let foundSides =
+        sorted.enumerated().count(where: { idx, pos in
+          (idx + 1 < sorted.count) && sorted[idx + 1] != pos + 1
+        }) + 1
+      sides += foundSides
+    }
+
+    for (_, hSides) in horizontalSides {
+      let sorted = hSides.sorted()
+      let foundSides =
+        sorted.enumerated().count(where: { idx, pos in
+          (idx + 1 < sorted.count) && sorted[idx + 1] != pos + 1
+        }) + 1
+      sides += foundSides
+    }
+
+    return Area(char: char, area: area, perimeter: perimeter, sides: sides)
   }
 
   mutating func findAreas() -> [Area] {
@@ -137,6 +178,14 @@ struct Day12: AdventDay {
   }
 
   func part2(input: String) -> Int {
-    return 0
+    var garden = Garden.fromString(from: input)
+
+    let areas = garden.findAreas()
+
+    return areas.reduce(
+      0,
+      { total, area in
+        return total + area.bulkCost
+      })
   }
 }
