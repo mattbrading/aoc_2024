@@ -8,7 +8,7 @@
 import Testing
 @testable import aoc_2024
 
-
+@Suite("Day 11 Tests")
 struct Day11Tests {
   let exampleInput = "125 17"
   @Test func exampleInputPart1() async throws {
