@@ -20,6 +20,7 @@ struct AoC2024: ParsableCommand {
       Day11.self,
       Day12.self,
       Day13.self,
+      Day14.self,
     ]
   )
 }
