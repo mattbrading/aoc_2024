@@ -8,13 +8,18 @@ let package = Package(
   platforms: [.macOS(.v13)],
   dependencies: [
     .package(
-      url: "https://github.com/apple/swift-argument-parser", from: "1.3.0")
+      url: "https://github.com/apple/swift-argument-parser", from: "1.3.0"),
+    .package(
+      url: "https://github.com/apple/swift-collections.git",
+        .upToNextMinor(from: "1.1.0")
+    )
   ],
   targets: [
     .executableTarget(
       name: "aoc_2024",
       dependencies: [
-        .product(name: "ArgumentParser", package: "swift-argument-parser")
+        .product(name: "ArgumentParser", package: "swift-argument-parser"),
+        .product(name: "Collections", package: "swift-collections")
       ]),
     .testTarget(
       name: "aoc_2024Tests",
