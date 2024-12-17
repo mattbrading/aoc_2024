@@ -47,7 +47,7 @@ private struct Maze {
       let position: Position
       let direction: (Int, Int)
       let cost: Int
-      let path: [Position]
+      var path: [Position]
 
     }
 
@@ -93,24 +93,34 @@ private struct Maze {
       let directionLeft = (vCol, -vRow)
 
       let ahead = Position(row: pos.row + vRow, col: pos.col + vCol)
+      let left = Position(
+        row: pos.row + directionLeft.0, col: pos.col + directionLeft.1)
+      let right = Position(
+        row: pos.row + directionRight.0, col: pos.col + directionRight.1)
 
-      if map[ahead.row][ahead.col] == .free {
-        var newPath = path
-        newPath.append(ahead)
-        possibilities.insert(
+      possibilities.insert(
+        contentsOf: [
           PathPoint(
             position: ahead, direction: exploring.direction, cost: cost + 1,
-            path: newPath))
-      }
+            path: path),
+          PathPoint(
+            position: left, direction: directionLeft, cost: cost + 1001,
+            path: path
+          ),
+          PathPoint(
+            position: right, direction: directionRight, cost: cost + 1001,
+            path: path),
+        ].compactMap({ point in
+          if map[point.position.row][point.position.col] == .free {
+            var point = point
+            var newPath = path
+            newPath.append(point.position)
 
-      possibilities.insert(contentsOf: [
-        PathPoint(
-          position: pos, direction: directionLeft, cost: cost + 1000, path: path
-        ),
-        PathPoint(
-          position: pos, direction: directionRight, cost: cost + 1000,
-          path: path),
-      ])
+            point.path = newPath
+            return point
+          }
+          return nil
+        }))
     }
 
     return (bestCost, visitedPositions)
