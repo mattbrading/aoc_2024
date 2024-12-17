@@ -140,15 +140,6 @@ struct Day17: AdventDay {
 
   }
 
-  func checkDeviceWithA(A: Int, instructions: [Int], haltPoint: Int) -> [Int] {
-    var device = StrangeDevice(
-      A: A, B: 0, C: 0, instructions: instructions, haltPoint: haltPoint)
-
-    device.execute()
-
-    return device.output
-  }
-
   func part2(input: String) -> Int {
     let exampleDevice = StrangeDevice.fromString(from: input)
     let instructions = exampleDevice.instructions
