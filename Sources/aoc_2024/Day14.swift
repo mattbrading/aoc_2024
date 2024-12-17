@@ -109,11 +109,20 @@ struct Day14: AdventDay {
     func checkXmasTree(seconds: Int) -> Bool {
       let map = simulateSeconds(robots: robots, seconds: seconds)
       
-      let match = map.description.contains(/[1]{8}/)
-
-      if match {
-        print(map)
-      }
+      
+      let match = map.rows.firstIndex(where: { row in
+        var sum = 0
+        
+        for col in row {
+          if col > 1 {
+            return false
+          }
+         
+          sum += col
+        }
+        
+        return sum >= width/4
+      }) != nil
 
       return match
     }
