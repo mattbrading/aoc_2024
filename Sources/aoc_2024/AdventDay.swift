@@ -11,9 +11,11 @@ import Foundation
 protocol AdventDay: ParsableCommand {
   var inputFile: String { get set }
 
-  func part1(input: String) -> Int
+  associatedtype Part1Result: CustomStringConvertible
+  func part1(input: String) -> Part1Result
 
-  func part2(input: String) -> Int
+  associatedtype Part2Result: CustomStringConvertible
+  func part2(input: String) -> Part2Result
 
 }
 
@@ -25,8 +27,8 @@ extension AdventDay {
 
     let clock = ContinuousClock()
 
-    var part1result: Int?
-    var part2result: Int?
+    var part1result: Any?
+    var part2result: Any?
 
     let part1time = clock.measure {
       part1result = part1(input: input)
