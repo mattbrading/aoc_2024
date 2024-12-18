@@ -27,14 +27,16 @@ struct Day18: AdventDay {
       map[y][x] = true
     })
 
-    var possibilities: [(Point, Int, Int)] = [(Point(row: 0, col: 0), 0, 2 * width)]
+    var possibilities: [(Point, Int, Int)] = [
+      (Point(row: 0, col: 0), 0, 2 * width)
+    ]
     var visited = Set<Point>()
     let endPosition = Point(row: width, col: width)
-    let validRange = 0..<(width+1)
+    let validRange = 0..<(width + 1)
 
     while !possibilities.isEmpty {
       let (currentSpace, stepCount, _) = possibilities.removeFirst()
-      
+
       if visited.contains(currentSpace) { continue }
 
       if currentSpace == endPosition {
@@ -49,7 +51,9 @@ struct Day18: AdventDay {
       ].forEach({ next in
         if validRange.contains(next.row) && validRange.contains(next.col) {
           if !map[next.row][next.col] && !visited.contains(next) {
-            let h = stepCount + 1 + endPosition.row - next.row + endPosition.col - next.col
+            let h =
+              stepCount + 1 + endPosition.row - next.row + endPosition.col
+              - next.col
             possibilities.append((next, stepCount + 1, h))
           }
         }
@@ -58,40 +62,39 @@ struct Day18: AdventDay {
       visited.insert(currentSpace)
       possibilities.sort(by: { $0.2 < $1.2 })
     }
-    
+
     return 0
   }
-  
+
   func firstBlockingByte(input: String, width: Int) -> String {
     let bytes = input.split(separator: "\n").count
-    
+
     var searchRange = 0..<bytes
-    var highestSuccessfulPath = 0
-    
+
     while !searchRange.isEmpty {
-      let midPoint = searchRange.lowerBound + (searchRange.upperBound - searchRange.lowerBound) / 2
+      let midPoint = searchRange.lowerBound + searchRange.count / 2
 
       let pathFound = findPath(input: input, bytes: midPoint, width: width) != 0
-      
-      
-      if pathFound {
-        highestSuccessfulPath = max(highestSuccessfulPath, midPoint)
-        
+
+      switch pathFound {
+
+      case true:
         if midPoint + 1 == searchRange.upperBound {
           let lastByte = input.split(separator: "\n")[midPoint]
           return String(lastByte)
         }
-        
+
         searchRange = (midPoint + 1)..<searchRange.upperBound
-      } else {
-        if midPoint == highestSuccessfulPath + 1 {
+
+      case false:
+        if midPoint == searchRange.lowerBound {
           let lastByte = input.split(separator: "\n")[midPoint - 1]
           return String(lastByte)
         }
         searchRange = searchRange.lowerBound..<midPoint
       }
     }
-    
+
     return ""
   }
 
