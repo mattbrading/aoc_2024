@@ -122,33 +122,36 @@ struct Day20: AdventDay {
     var cheatCount = 0
 
     for (pos, time) in path {
-      var neighbours: Set<Position> = Set()
 
       (0..<21).forEach({ row in
         (0..<(21 - row)).forEach({ col in
-          [
-            Position(row: pos.row + row, col: pos.col + col),
-            Position(row: pos.row + row, col: pos.col - col),
-            Position(row: pos.row - row, col: pos.col + col),
-            Position(row: pos.row - row, col: pos.col - col),
-          ].forEach({ neighbour in
-            if (0..<map.height).contains(neighbour.row)
-              && (0..<map.width).contains(neighbour.col)
-            {
-              neighbours.insert(neighbour)
+
+          var neighbours = [
+            Position(row: pos.row + row, col: pos.col + col)
+          ]
+
+          if col != 0 {
+            neighbours.append(Position(row: pos.row + row, col: pos.col - col))
+          }
+
+          if row != 0 {
+            neighbours.append(Position(row: pos.row - row, col: pos.col + col))
+          }
+
+          if row != 0 && col != 0 {
+            neighbours.append(Position(row: pos.row - row, col: pos.col - col))
+          }
+
+          neighbours.forEach({ neighbour in
+            if let previousTime = path[neighbour] {
+              let distance =
+                abs(neighbour.row - pos.row) + abs(neighbour.col - pos.col)
+              if time - previousTime - distance >= threshold {
+                cheatCount += 1
+              }
             }
           })
         })
-      })
-
-      neighbours.forEach({ neighbour in
-        let distance =
-          abs(neighbour.row - pos.row) + abs(neighbour.col - pos.col)
-        if let previousTime = path[neighbour] {
-          if time - previousTime - distance >= threshold {
-            cheatCount += 1
-          }
-        }
       })
     }
 
