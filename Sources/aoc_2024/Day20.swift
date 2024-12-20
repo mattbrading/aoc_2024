@@ -121,36 +121,38 @@ struct Day20: AdventDay {
 
     var cheatCount = 0
 
+    func checkValidCheat(pos: Position, time: Int, neighbour: Position) {
+
+    }
+
     for (pos, time) in path {
+
+      func checkValidCheat(_ neighbour: Position) {
+        if let previousTime = path[neighbour] {
+          let distance =
+            abs(neighbour.row - pos.row) + abs(neighbour.col - pos.col)
+          if time - previousTime - distance >= threshold {
+            cheatCount += 1
+          }
+        }
+      }
 
       (0..<21).forEach({ row in
         (0..<(21 - row)).forEach({ col in
 
-          var neighbours = [
-            Position(row: pos.row + row, col: pos.col + col)
-          ]
+          checkValidCheat(Position(row: pos.row + row, col: pos.col + col))
 
           if col != 0 {
-            neighbours.append(Position(row: pos.row + row, col: pos.col - col))
+            checkValidCheat(Position(row: pos.row + row, col: pos.col - col))
           }
 
           if row != 0 {
-            neighbours.append(Position(row: pos.row - row, col: pos.col + col))
+            checkValidCheat(Position(row: pos.row - row, col: pos.col + col))
           }
 
           if row != 0 && col != 0 {
-            neighbours.append(Position(row: pos.row - row, col: pos.col - col))
+            checkValidCheat(Position(row: pos.row - row, col: pos.col - col))
           }
-
-          neighbours.forEach({ neighbour in
-            if let previousTime = path[neighbour] {
-              let distance =
-                abs(neighbour.row - pos.row) + abs(neighbour.col - pos.col)
-              if time - previousTime - distance >= threshold {
-                cheatCount += 1
-              }
-            }
-          })
         })
       })
     }
